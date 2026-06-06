@@ -3,7 +3,7 @@ import { getDrills } from './data/index';
 import type { Drill, WorkoutMode } from './types';
 
 export default function App() {
-  const [lang, setLang] = useState<'cz' | 'en'>('cz');
+  const [lang] = useState<'cz' | 'en'>('cz');
   const [mode, setMode] = useState<WorkoutMode>('basketball');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [maxDuration, setMaxDuration] = useState<number>(60);
