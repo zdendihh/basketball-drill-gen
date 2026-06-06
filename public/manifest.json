@@ -1,0 +1,17 @@
+{
+  "name": "HoopsPro Drill Gen",
+  "short_name": "HoopsPro",
+  "description": "Professional Basketball Drill Generator",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#aa3bff",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/889/889503.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

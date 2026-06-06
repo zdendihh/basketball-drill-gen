@@ -1,0 +1,229 @@
+:root {
+  --primary: #ff5722;
+  --primary-dark: #e64a19;
+  --secondary: #263238;
+  --accent: #aa3bff;
+  --bg-app: #f8f9fa;
+  --bg-card: #ffffff;
+  --text-main: #212121;
+  --text-muted: #757575;
+  --border-light: #eeeeee;
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+  --input-bg: #ffffff;
+  
+  --safe-area-top: env(safe-area-inset-top);
+  --safe-area-bottom: env(safe-area-inset-bottom);
+
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+[data-theme='dark'] {
+  --bg-app: #121212;
+  --bg-card: #1e1e1e;
+  --text-main: #e0e0e0;
+  --text-muted: #aaaaaa;
+  --border-light: #333333;
+  --secondary: #eceff1;
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.2);
+  --input-bg: #2c2c2c;
+  --social-bg: rgba(255, 255, 255, 0.05);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* App Header */
+.app-header {
+  padding: calc(var(--safe-area-top) + 20px) 20px 15px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-light);
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(65px + var(--safe-area-bottom));
+  background: var(--bg-card);
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-bottom: var(--safe-area-bottom);
+  z-index: 1000;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 8px 0;
+  flex: 1;
+  cursor: pointer;
+}
+
+.nav-item.active {
+  color: var(--primary);
+}
+
+.nav-icon {
+  font-size: 24px;
+}
+
+/* Main Content Area */
+.main-content {
+  flex: 1;
+  padding: 20px 20px calc(85px + var(--safe-area-bottom));
+}
+
+/* Section Styling */
+.section-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 15px 0;
+  color: var(--secondary);
+}
+
+/* Button Styling */
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  width: 100%;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+  background: var(--primary-dark);
+}
+
+/* Drill Grid & Cards */
+.drill-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.drill-card {
+  background: var(--bg-card);
+  border-radius: 14px;
+  padding: 16px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+}
+
+.drill-card h3 {
+  margin: 0 0 8px 0;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.drill-meta {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.badge-shooting { background: #fff3e0; color: #ff9800; }
+.badge-dribbling { background: #e3f2fd; color: #2196f3; }
+.badge-defense { background: #fce4ec; color: #e91e63; }
+.badge-passing { background: #e8f5e9; color: #4caf50; }
+.badge-conditioning { background: #f3e5f5; color: #9c27b0; }
+.badge-rebounding { background: #efebe9; color: #795548; }
+.badge-legs { background: #ffebee; color: #c62828; }
+.badge-arms { background: #e0f2f1; color: #00695c; }
+.badge-back { background: #e8eaf6; color: #283593; }
+.badge-core { background: #fffde7; color: #f9a825; }
+.badge-mobility { background: #f1f8e9; color: #558b2f; }
+.badge-stability { background: #e0f7fa; color: #00838f; }
+
+.drill-footer-stats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-light);
+  padding-top: 12px;
+  margin-top: 12px;
+}
+
+/* Phase Sections in Plan */
+.plan-phase {
+  margin-bottom: 30px;
+}
+
+.phase-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.phase-label h3 {
+  margin: 0;
+  font-size: 16px;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
