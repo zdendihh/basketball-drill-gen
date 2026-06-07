@@ -29,6 +29,10 @@ export const translations = {
     basketball: 'Basketball',
     fitness: 'Fitness',
     all: 'All',
+    selectParams: 'Select parameters and generate!',
+    browseByCategory: 'Browse exercises by category:',
+    description: 'Description',
+    commonMistakes: 'Common Mistakes',
     categories: {
       shooting: 'Shooting',
       dribbling: 'Dribbling',
@@ -81,6 +85,10 @@ export const translations = {
     basketball: 'Basketbal',
     fitness: 'Fitness',
     all: 'Vše',
+    selectParams: 'Vyber parametry a generuj!',
+    browseByCategory: 'Procházet cviky podle kategorií:',
+    description: 'Popis',
+    commonMistakes: 'Časté chyby',
     categories: {
       shooting: 'Střelba',
       dribbling: 'Driblink',

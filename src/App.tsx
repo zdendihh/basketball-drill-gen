@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { getDrills } from './data/index';
+import { translations } from './translations';
 import type { Drill, WorkoutMode } from './types';
 
 export default function App() {
-  const [lang] = useState<'cz' | 'en'>('cz');
+  const [lang, setLang] = useState<'cs' | 'en'>('cs');
   const [mode, setMode] = useState<WorkoutMode>('basketball');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [maxDuration, setMaxDuration] = useState<number>(60);
@@ -13,8 +14,8 @@ export default function App() {
   const [expandedDrill, setExpandedDrill] = useState<string | null>(null);
   const [expandedWorkoutDrill, setExpandedWorkoutDrill] = useState<string | null>(null);
 
-  const langCode = lang === 'cz' ? 'cs' : 'en';
-  const allDrills = getDrills(langCode, mode);
+  const t = translations[lang];
+  const allDrills = getDrills(lang, mode);
   
   const filteredDrills = allDrills.filter(drill => 
     (selectedCategory === 'all' ? true : drill.category === selectedCategory) &&
@@ -45,7 +46,14 @@ export default function App() {
         <h1 style={{ fontSize: '24px', fontWeight: '800', color: theme === 'dark' ? '#fff' : '#000' }}>
           {mode === 'basketball' ? '🏀 HOOPS' : '💪 FIT'}
         </h1>
-        <div style={{ display: 'flex', gap: '15px' }}>
+        <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+          <button 
+            onClick={() => setLang(lang === 'cs' ? 'en' : 'cs')} 
+            style={{ fontSize: '20px', padding: '8px', borderRadius: '50%', border: 'none', background: theme === 'dark' ? '#333' : '#eee', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '40px' }}
+            title={lang === 'cs' ? 'Switch to English' : 'Přepnout do češtiny'}
+          >
+            {lang === 'cs' ? '🇺🇸' : '🇨🇿'}
+          </button>
           <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} style={{ fontSize: '24px', padding: '10px', borderRadius: '50%', border: 'none', background: 'transparent', cursor: 'pointer' }}>
             {theme === 'dark' ? '☀️' : '🌙'}
           </button>
@@ -58,7 +66,7 @@ export default function App() {
         <section className="section-card" style={{ backgroundColor: theme === 'dark' ? '#2d2d2d' : '#fff', padding: '15px', borderRadius: '8px', border: '1px solid #444', color: theme === 'dark' ? '#ffffff' : '#000000' }}>
           <div style={{ marginBottom: '15px' }}>
             <label className="section-title" style={{ color: theme === 'dark' ? '#e0e0e0' : '#333' }}>
-              {lang === 'cz' ? 'Délka tréninku (min):' : 'Workout duration (min):'} {maxDuration}
+              {t.duration} ({t.minutes}): {maxDuration}
             </label>
             <input 
               type="range" min="5" max="60" step="5" value={maxDuration} 
@@ -67,9 +75,9 @@ export default function App() {
             />
           </div>
           
-          <label className="section-title" style={{ color: theme === 'dark' ? '#e0e0e0' : '#333' }}>{lang === 'cz' ? 'Zaměření:' : 'Focus:'}</label>
+          <label className="section-title" style={{ color: theme === 'dark' ? '#e0e0e0' : '#333' }}>{t.focusArea}:</label>
           <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '10px' }}>
-            <button onClick={() => setSelectedCategory('all')} className={selectedCategory === 'all' ? 'btn-primary' : 'nav-item'}>All</button>
+            <button onClick={() => setSelectedCategory('all')} className={selectedCategory === 'all' ? 'btn-primary' : 'nav-item'}>{t.all}</button>
             {categories.map(cat => (
               <button key={cat} onClick={() => setSelectedCategory(cat)} className={selectedCategory === cat ? 'btn-primary' : 'nav-item'} style={{ whiteSpace: 'nowrap' }}>
                 {cat}
@@ -79,7 +87,7 @@ export default function App() {
         </section>
 
         <button onClick={generateWorkout} className="btn-primary" style={{ width: '100%', padding: '15px', marginTop: '10px', fontSize: '16px', fontWeight: 'bold' }}>
-          🔥 {lang === 'cz' ? 'GENEROVAT TRÉNINK' : 'GENERATE WORKOUT'}
+          🔥 {mode === 'basketball' ? t.generateTraining.toUpperCase() : t.generateWorkout.toUpperCase()}
         </button>
 
         {workout.length > 0 ? (
@@ -97,28 +105,28 @@ export default function App() {
                     </span>
                   </div>
                   <div style={{ fontSize: '14px', color: theme === 'dark' ? '#bbbbbb' : '#666', marginTop: '5px' }}>
-                    ⏱ {drill.duration} min
+                    ⏱ {drill.duration} {t.minutes}
                   </div>
                 </button>
                 {expandedWorkoutDrill === drill.name && (
                   <div style={{ padding: '10px', fontSize: '13px', backgroundColor: theme === 'dark' ? '#222' : '#f9f9f9', color: theme === 'dark' ? '#aaa' : '#666', borderRadius: '4px', marginTop: '10px' }}>
-                    <p><strong>Popis:</strong> {drill.description}</p>
-                    <p><strong>Série/Opakování:</strong> {drill.sets} / {drill.reps}</p>
+                    <p><strong>{t.description}:</strong> {drill.description}</p>
+                    <p><strong>{t.sets}:</strong> {drill.sets} / {drill.reps}</p>
                     {drill.steps && drill.steps.length > 0 && (
                       <>
-                        <p><strong>Jak na to:</strong></p>
+                        <p><strong>{t.steps}:</strong></p>
                         <ul>{drill.steps.map((step, i) => <li key={i}>{step}</li>)}</ul>
                       </>
                     )}
                     {drill.techniqueTips && drill.techniqueTips.length > 0 && (
                       <>
-                        <p><strong>Jak to udělat správně:</strong></p>
+                        <p><strong>{t.tips}:</strong></p>
                         <ul>{drill.techniqueTips.map((tip, i) => <li key={i}>{tip}</li>)}</ul>
                       </>
                     )}
                     {drill.commonMistakes && drill.commonMistakes.length > 0 && (
                       <>
-                        <p><strong>Časté chyby:</strong></p>
+                        <p><strong>{t.commonMistakes}:</strong></p>
                         <ul style={{ color: '#d9534f' }}>{drill.commonMistakes.map((err, i) => <li key={i}>{err}</li>)}</ul>
                       </>
                     )}
@@ -129,13 +137,13 @@ export default function App() {
           </div>
         ) : (
           <div className="section-card" style={{ textAlign: 'center', marginTop: '20px', padding: '20px', color: theme === 'dark' ? '#bbb' : '#666' }}>
-            <p>{lang === 'cz' ? 'Vyber parametry a generuj!' : 'Set parameters and generate!'}</p>
+            <p>{t.selectParams}</p>
           </div>
         )}
 
         <section style={{ marginTop: '40px', paddingBottom: '40px' }}>
           <h2 style={{ fontSize: '18px', marginBottom: '15px', color: theme === 'dark' ? '#fff' : '#000' }}>
-            {lang === 'cz' ? 'Procházet cviky podle kategorií:' : 'Browse exercises by category:'}
+            {t.browseByCategory}
           </h2>
           
           {categories.map(cat => (
@@ -159,23 +167,23 @@ export default function App() {
                       </button>
                       {expandedDrill === drill.name && (
                         <div style={{ padding: '10px', fontSize: '13px', backgroundColor: theme === 'dark' ? '#222' : '#f9f9f9', color: theme === 'dark' ? '#aaa' : '#666', borderRadius: '4px' }}>
-                          <p><strong>Popis:</strong> {drill.description}</p>
-                          <p><strong>Série/Opakování:</strong> {drill.sets} / {drill.reps}</p>
+                          <p><strong>{t.description}:</strong> {drill.description}</p>
+                          <p><strong>{t.sets}:</strong> {drill.sets} / {drill.reps}</p>
                           {drill.steps && drill.steps.length > 0 && (
                             <>
-                              <p><strong>Jak na to:</strong></p>
+                              <p><strong>{t.steps}:</strong></p>
                               <ul>{drill.steps.map((step, i) => <li key={i}>{step}</li>)}</ul>
                             </>
                           )}
                           {drill.techniqueTips && drill.techniqueTips.length > 0 && (
                             <>
-                              <p><strong>Jak to udělat správně:</strong></p>
+                              <p><strong>{t.tips}:</strong></p>
                               <ul>{drill.techniqueTips.map((tip, i) => <li key={i}>{tip}</li>)}</ul>
                             </>
                           )}
                           {drill.commonMistakes && drill.commonMistakes.length > 0 && (
                             <>
-                              <p><strong>Časté chyby:</strong></p>
+                              <p><strong>{t.commonMistakes}:</strong></p>
                               <ul style={{ color: '#d9534f' }}>{drill.commonMistakes.map((err, i) => <li key={i}>{err}</li>)}</ul>
                             </>
                           )}
